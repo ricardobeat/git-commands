@@ -1,0 +1,7 @@
+PREFIX=$(git rev-parse --show-prefix)
+
+if [[ -z $PREFIX ]]; then
+	git ls-files | grep $1
+else
+	git ls-files | grep $1 | sed s%`git rev-parse --show-prefix`%%
+fi

@@ -1,0 +1,2 @@
+git rev-list HEAD --topo-sort -n 100 | grep -f shas.txt
+# git log --oneline -300 --format=%h | grep -Ff shas.txt

@@ -1,0 +1,6 @@
+set -e
+
+git remote prune origin
+git fetch -p
+git repack -Ad --window=250 --depth=100
+git gc

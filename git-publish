@@ -1,0 +1,31 @@
+#!/bin/bash
+
+BRANCH=${1:-`git rev-parse --abbrev-ref HEAD`}
+
+branch_exists () {
+	# git show-ref --verify --quiet refs/heads/$1
+    git rev-parse --abbrev-ref $1 &>/dev/null && echo 1
+}
+
+if [[ $(branch_exists $BRANCH) -ne 1 ]]; then
+    echo "Branch $BRANCH does not exist."
+    exit 1
+fi
+
+echo "Publishing $BRANCH..."
+
+git fetch origin
+
+if [[ $BRANCH == 'master' || $BRANCH == 'trunk' || $BRANCH == '' ]]; then
+    echo "$BRANCH? Nope."
+    exit 1
+fi
+
+read -p "Overwrite origin/$BRANCH? [Y/n] " -n 1 -r
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then echo; exit 1; fi
+
+if [[ $(branch_exists origin/$BRANCH) ]]; then
+	git push origin --delete --quiet $BRANCH
+fi
+
+git push -u origin $BRANCH
