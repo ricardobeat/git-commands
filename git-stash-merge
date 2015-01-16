@@ -1,0 +1,23 @@
+set -e
+
+# unstage everything
+git reset
+
+# save pointer to top stash
+STASH1=$(git rev-parse stash@{0})
+
+if git diff-files --quiet; then
+	echo "You don't have any changes. Use 'git stash apply' or 'git stash pop'"
+	exit 1
+fi
+
+# stash current changes
+git stash
+
+# save pointer to new top stash
+STASH2=$(git rev-parse stash@{0})
+
+git merge --no-commit $STASH1 $STASH2
+
+git stash drop
+git reset # git merge stages changes by default
