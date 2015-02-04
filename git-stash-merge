@@ -1,18 +1,30 @@
+# git-stash-merge
+# ---------------
+# 
+# Applies stash on top of local changes - triggers a merge
+# and allows you to resolve any conflicts.
+
 set -e
 
 # unstage everything
 git reset
 
+REV=${1:-stash@{0}}
+
 # save pointer to top stash
-STASH1=$(git rev-parse stash@{0})
+STASH1=$(git rev-parse $REV)
+
+if [[ -z "$STASH1" ]]; then
+  echo "Stash ref $STASH1 not found."
+fi
 
 if git diff-files --quiet; then
-	echo "You don't have any changes. Use 'git stash apply' or 'git stash pop'"
+	echo "You don't have any tracked changes. Try git stash apply / pop."
 	exit 1
 fi
 
 # stash current changes
-git stash
+git stash save "git-stash-merge $(date '+%Y-%m-%d% %H:%M:%S')"
 
 # save pointer to new top stash
 STASH2=$(git rev-parse stash@{0})
