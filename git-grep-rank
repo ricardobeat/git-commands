@@ -1,5 +1,9 @@
 # git grep-rank [curse word here]
 
+if [[ "$1" == '-v' ]]; then
+  VERBOSE=1; shift
+fi
+
 matches=$(git grep -n $1)
 count=$(wc -l <<< "$matches" | tr -d ' ')
 
@@ -10,6 +14,7 @@ echo
 git grep -n $1 | while read match; do
     file=$(echo $match | cut -f1 -d ':')
     line=$(echo $match | cut -f2 -d ':')
+    if [[ $VERBOSE ]]; then >&2 echo $file -L$line,$line; fi
     git blame --porcelain $file -L$line,$line
 done | grep -E '^author ' | cut -f2- -d ' ' | sort | uniq -c | sort -nr
 
