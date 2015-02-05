@@ -1,0 +1,16 @@
+# git grep-rank [curse word here]
+
+matches=$(git grep -n $1)
+count=$(echo "$matches" | wc -l | tr -d ' ')
+
+echo "$count matches for '$1'"
+if (( $count > 1000 )); then echo "This might take a while..."; fi
+echo
+
+git grep -n $1 | while read match; do
+    file=$(echo $match | cut -f1 -d ':')
+    line=$(echo $match | cut -f2 -d ':')
+    git blame --porcelain $file -L$line,$line
+done | grep -E '^author ' | cut -f2- -d ' ' | sort | uniq -c | sort -nr
+
+echo
