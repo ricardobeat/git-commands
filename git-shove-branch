@@ -3,7 +3,7 @@
 BRANCH=${1:-`git rev-parse --abbrev-ref HEAD`}
 
 branch_exists () {
-	# git show-ref --verify --quiet refs/heads/$1
+    # git show-ref --verify --quiet refs/heads/$1
     git rev-parse --abbrev-ref $1 &>/dev/null && echo 1
 }
 
@@ -25,7 +25,7 @@ read -p "Overwrite origin/$BRANCH? [Y/n] " -n 1 -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]; then echo; exit 1; fi
 
 if [[ $(branch_exists origin/$BRANCH) ]]; then
-	git push origin --delete --quiet $BRANCH
+    git push origin --delete --quiet $BRANCH
 fi
 
 git push -u origin $BRANCH
