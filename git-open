@@ -1,3 +1,3 @@
-
+# open all changed files
 prefix=$(git rev-parse --show-prefix)
-subl $(git status -s --porcelain -uall | cut -c4- | sed "s,${prefix:-ºº},," | tr '\n' ' ')
+$EDITOR $(git status -s --porcelain -uall | cut -c4- | sed "s,${prefix:-ºº},," | tr '\n' ' ')
