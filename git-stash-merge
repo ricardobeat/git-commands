@@ -19,8 +19,8 @@ if [[ -z "$STASH1" ]]; then
 fi
 
 if git diff-files --quiet; then
-	echo "You don't have any tracked changes. Try git stash apply / pop."
-	exit 1
+    echo "You don't have any tracked changes. Try git stash apply / pop."
+    exit 1
 fi
 
 # stash current changes

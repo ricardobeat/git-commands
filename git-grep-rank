@@ -1,7 +1,7 @@
 # git grep-rank [curse word here]
 
 if [[ "$1" == '-v' ]]; then
-  VERBOSE=1; shift
+    VERBOSE=1; shift
 fi
 
 matches=$(git grep -n $1)
