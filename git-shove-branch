@@ -1,9 +1,11 @@
 #!/bin/bash
 
+# Deletes a remote branch and then pushes it again.
+# Useful when force-pushes are not allowed and you want to rebase
+
 BRANCH=${1:-`git rev-parse --abbrev-ref HEAD`}
 
 branch_exists () {
-    # git show-ref --verify --quiet refs/heads/$1
     git rev-parse --abbrev-ref $1 &>/dev/null && echo 1
 }
 
