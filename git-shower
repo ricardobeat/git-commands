@@ -1,6 +1,12 @@
 set -e
 
+read -p "This will renmove all dangling heads. Are you sure you want to proceed? [Y/n] " yn
+case $yn in
+  [Yy]*) ;;
+  *) exit;;
+esac 
+
 git remote prune origin
 git fetch -p
 git repack -Ad --window=250 --depth=100
-git gc
+git gc --prune=now
