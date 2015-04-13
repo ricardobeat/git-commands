@@ -1,8 +1,12 @@
 
 PREFIX=$(git rev-parse --show-prefix)
 
+for pattern in $@; do
+  greps+=" | grep --colour=always $pattern"
+done
+
 if [[ -z $PREFIX ]]; then
-    git ls-files | grep $1
+    eval "git ls-files $greps"
 else
-    git ls-files | grep $1 | sed s%`git rev-parse --show-prefix`%%
+    eval "git ls-files $greps" | sed s%`git rev-parse --show-prefix`%%
 fi
