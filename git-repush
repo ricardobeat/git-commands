@@ -18,7 +18,7 @@ echo "Publishing $BRANCH..."
 
 git fetch origin
 
-if [[ $BRANCH == 'master' || $BRANCH == 'trunk' || $BRANCH == '' ]]; then
+if [[ $BRANCH == 'master' || $BRANCH == 'trunk' || $BRANCH == '' || $(echo $BRANCH) == '' ]]; then
     echo "$BRANCH? Nope."
     exit 1
 fi
