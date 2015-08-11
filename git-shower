@@ -1,6 +1,6 @@
 set -e
 
-read -p "This will renmove all dangling heads. Are you sure you want to proceed? [Y/n] " yn
+read -p "This will remove all dangling heads. Are you sure you want to proceed? [Y/n] " yn
 case $yn in
   [Yy]*) ;;
   *) exit;;
