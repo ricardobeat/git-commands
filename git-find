@@ -1,8 +1,14 @@
 
 PREFIX=$(git rev-parse --show-prefix)
+COLOUR=always
+
+if [[ $1 == '--plain' || $1 == '-p' ]]; then
+  COLOUR=no
+  shift
+fi
 
 for pattern in $@; do
-  greps+=" | grep --colour=always $pattern"
+  greps+=" | grep --colour=$COLOUR $pattern"
 done
 
 if [[ -z $PREFIX ]]; then
