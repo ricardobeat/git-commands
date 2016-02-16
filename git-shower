@@ -7,5 +7,5 @@ case $yn in
 esac 
 
 git remote prune origin
-git repack -Ad --window=250 --depth=100
+git repack -Ad --window=250 --depth=250
 git gc --prune=now
