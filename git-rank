@@ -8,7 +8,7 @@ P='\x1b[35;01m'
 G='\x1b[90;01m'
 Z='\x1b[0m'
 
-printf "\n%-40s %9s %9s %9s %9s %9s\n\n" Author Commits Added Removed Total Modified
+printf "\n%-40s %9s %9s %9s %9s %9s\n" AUTHOR COMMITS ADDED REMOVED TOTAL MODIFIED
 
 git shortlog -s -n | while read commits name; do
     read added removed total modified < <(git author-stats --num "$name")
