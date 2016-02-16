@@ -23,11 +23,11 @@ if [[ $BRANCH == 'master' || $BRANCH == 'trunk' || $BRANCH == '' || $(echo $BRAN
     exit 1
 fi
 
-read -p "Overwrite origin/$BRANCH? [Y/n] " -n 1 -r
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then echo; exit 1; fi
+read -p "Overwrite origin/$BRANCH? [Y/n] " -n 1 -r; echo
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then exit 1; fi
 
 if [[ $(branch_exists origin/$BRANCH) ]]; then
-    git push origin --delete --quiet $BRANCH
+    git push origin --delete $BRANCH
 fi
 
 git push -u origin $BRANCH
