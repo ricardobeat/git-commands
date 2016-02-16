@@ -12,5 +12,8 @@ printf "\n%-40s %9s %9s %9s %9s %9s\n\n" Author Commits Added Removed Total Modi
 
 git shortlog -s -n | while read commits name; do
     read added removed total modified < <(git author-stats --num "$name")
+    if type iconv >/dev/null 2>&1; then
+        name=$(echo $name | iconv -f utf-8 -t ascii//translit)
+    fi
     printf "%-40s %9s $G%9s $R%9s $Y%9s $B%9s$Z\n" "$name" $commits $added $removed $total $modified
 done
