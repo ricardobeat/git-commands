@@ -1,0 +1,21 @@
+#!/bin/bash
+
+if [[ "$1" == '--num' ]]; then NUMBERS_ONLY=1; shift; fi
+
+author=$1
+if [[ -z "$author" ]]; then
+    echo "Usage: git author-stats [author name]"
+    exit
+fi
+
+git log --author="$author" --pretty=tformat: --numstat | awk '{
+    added    += $1;
+    removed  += $2;
+    modified += $1 - -$2;
+    total    += $1 - $2;
+} END {
+    if (NUMBERS_ONLY)
+        printf "Added: %s, removed: %s, total: %s, modified: %s lines\n", added, removed, total, modified
+    else
+        printf "%s %s %s %s", added, removed, total, modified
+}'
