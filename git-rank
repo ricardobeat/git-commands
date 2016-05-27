@@ -11,7 +11,7 @@ Z='\x1b[0m'
 printf "\n%-40s %9s %9s %9s %9s %9s\n" AUTHOR COMMITS ADDED REMOVED TOTAL MODIFIED
 
 git shortlog -s -n | while read commits name; do
-    read added removed total modified < <(git author-stats --num "$name")
+    read added removed total modified < <(git author-stats --raw "$name")
     if type iconv >/dev/null 2>&1; then
         name=$(echo $name | iconv -f utf-8 -t ascii//translit)
     fi
