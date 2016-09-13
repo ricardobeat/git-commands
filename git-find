@@ -8,7 +8,7 @@ if [[ $1 == '--plain' || $1 == '-p' ]]; then
 fi
 
 for pattern in $@; do
-  greps+=" | grep --colour=$COLOUR $pattern"
+  greps+=" | grep -i --colour=$COLOUR $pattern"
 done
 
 if [[ -z $PREFIX ]]; then
