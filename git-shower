@@ -1,11 +1,11 @@
+#!/bin/bash
 set -e
 
-read -p "This will remove all dangling heads. Are you sure you want to proceed? [y/N] " yn
-case $yn in
-  [Yy]*) ;;
-  *) exit;;
-esac 
+# read -p "This will remove all dangling commits. Are you sure you want to proceed? [y/N] " yn
+# case $yn in
+#   [Yy]*) ;;
+#   *) exit;;
+# esac 
 
-git remote prune origin
-git repack -Ad --window=250 --depth=250
-git gc --prune=now
+git gc --prune='8 weeks ago'
+git repack --window=50 --depth=100 -f
