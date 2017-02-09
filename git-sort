@@ -1,3 +1,9 @@
 #!/bin/bash
 
-git rev-list HEAD --topo-sort -n 100 | grep -f shas.txt
+if [ -t 0 ]; then
+    hashes="$@"
+else
+    hashes=$(cat)
+fi
+
+git rev-list HEAD --topo-order --abbrev-commit -n ${N:-1000} | grep -f <(echo "$hashes" | tr ' ' '\n')
