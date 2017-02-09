@@ -1,1 +1,3 @@
+#!/bin/bash
+
 git log --pretty='format:%C(yellow)%h%Cred%d %Creset%s%Cblue [%cn %C(cyan)%cr]' --decorate --abbrev-commit -G"$1"

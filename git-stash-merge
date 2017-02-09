@@ -1,6 +1,5 @@
-# git-stash-merge
-# ---------------
-# 
+#!/bin/bash
+
 # Applies stash on top of local changes - triggers a merge
 # and allows you to resolve any conflicts.
 
