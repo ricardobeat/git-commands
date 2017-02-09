@@ -1,17 +1,20 @@
+#!/bin/bash
 # git grep-rank [curse word here]
 
 if [[ "$1" == '-v' ]]; then
     VERBOSE=1; shift
 fi
 
-matches=$(git grep -n $1)
+matches=$(git grep -n $1 | grep -v '^Binary file')
 count=$(wc -l <<< "$matches" | tr -d ' ')
 
 echo "$count matches for '$1'"
-if (( $count > 1000 )); then echo "This might take a while..."; fi
-echo
 
-git grep -n $1 | while read match; do
+if (( $count > 1000 )); then
+	echo "This might take a while..."
+fi
+
+echo "$matches" | while read match; do
     file=$(echo $match | cut -f1 -d ':')
     line=$(echo $match | cut -f2 -d ':')
     if [[ $VERBOSE ]]; then >&2 echo $file -L$line,$line; fi
