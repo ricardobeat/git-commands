@@ -6,7 +6,7 @@ if [[ "$1" == '-v' ]]; then
 fi
 
 matches=$(git grep -n $1 | grep -v '^Binary file')
-count=$(wc -l <<< "$matches" | tr -d ' ')
+count=$(echo -n "$matches" | wc -l | tr -d ' ')
 
 echo "$count matches for '$1'"
 
