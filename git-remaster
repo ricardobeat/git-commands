@@ -13,14 +13,14 @@ BRANCH=$(git rev-parse --abbrev-ref HEAD)
  
 # save current state to a detached commit object and reset
 RSTASH=$(git stash create --include-untracked)
-git reset --hard
 
 if [[ $RSTASH ]]; then
     echo "Stashed $RSTASH"
+	git reset --hard
 fi
     
 # fetch updates
-git fetch origin
+git fetch --prune --no-tags origin $MASTER
  
 # if not on master branch, check it out, update and return to branch
 if [[ $BRANCH != $MASTER ]]; then
