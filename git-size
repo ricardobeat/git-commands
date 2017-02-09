@@ -1,6 +1,6 @@
-#!/bin/sh
-#. git-sh-setup
-args=$(git rev-parse "$@")
+#!/bin/bash
+
+args=$(git rev-parse --short "$@")
 eval "git diff-tree -r $args" | {
   total=0
   while read A B C D M P
@@ -15,8 +15,13 @@ eval "git diff-tree -r $args" | {
         continue
         ;;
     esac
+    kbytes=$(( $bytes ))
     total=$(( $total + $bytes ))
     printf '%d\t%s\n' $bytes "$P"
   done
-  echo total $total
+  if (( $total < 1000 )); then
+    echo ${total} bytes
+  else
+    echo $(( total / 1000))KB
+  fi
 }
