@@ -8,8 +8,14 @@ if [[ $1 == '--plain' || $1 == '-p' ]]; then
   shift
 fi
 
+if ! type "rg" > /dev/null; then
+	cmd="grep --colour=$COLOUR"
+else
+	cmd="rg -N"
+fi
+
 for pattern in $@; do
-  greps+=" | grep -i --colour=$COLOUR $pattern"
+  greps+=" | $cmd -i $pattern"
 done
 
 if [[ -z $PREFIX ]]; then
