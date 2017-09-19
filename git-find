@@ -8,7 +8,7 @@ if [[ $1 == '--plain' || $1 == '-p' ]]; then
   shift
 fi
 
-if ! type "rg" > /dev/null; then
+if ! type "rg" &> /dev/null; then
 	cmd="grep --colour=$COLOUR"
 else
 	cmd="rg -N"
