@@ -1,13 +1,13 @@
 #!/bin/bash
 
-args=$(git rev-parse --short "$@")
-eval "git diff-tree -r $args" | {
+# args=$(git rev-parse --short "$@")
+
+eval "git diff-tree -r $@" | {
   total=0
-  while read A B C D M P
-  do
+  while read A B C D M P; do
     if [[ -z $M ]]; then continue; fi
     case $M in
-      M) bytes=$(( $(git cat-file -s $D) - $(git cat-file -s $C) )) ;;
+      M) bytes=$(( $(git cat-file -s $D || echo 0) - $(git cat-file -s $C || echo 0) )) ;;
       A) bytes=$(git cat-file -s $D) ;;
       D) bytes=-$(git cat-file -s $C) ;;
       *)
@@ -22,6 +22,6 @@ eval "git diff-tree -r $args" | {
   if (( $total < 1000 )); then
     echo ${total} bytes
   else
-    echo $(( total / 1000))KB
+    echo $(( total / 1000 ))KB
   fi
 }
