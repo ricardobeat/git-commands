@@ -25,11 +25,11 @@ if git fetch --prune --no-tags origin $MASTER; then
     # if not on master branch, check it out, update and return to branch
     if [[ $BRANCH != $MASTER ]]; then
         git checkout $MASTER
-        git rebase origin/$MASTER --preserve-merges
+        git rebase origin/$MASTER --rebase-merges
         git checkout -
     fi
     # rebase changes on top of origin/master
-    git rebase origin/$MASTER --preserve-merges
+    git rebase origin/$MASTER --rebase-merges
 fi
  
 # bring back stash if available, hide errors when empty
