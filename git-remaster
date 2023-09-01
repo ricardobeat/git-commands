@@ -32,7 +32,7 @@ if [[ $RSTASH ]]; then
 fi
     
 # fetch updates
-if git fetch --prune --no-tags origin $MAIN_BRANCH; then   
+if git fetch --no-tags origin $MAIN_BRANCH; then
     # if not on master branch, check it out, update and return to branch
     if [[ $BRANCH != $MAIN_BRANCH ]]; then
         git checkout $MAIN_BRANCH
