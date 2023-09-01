@@ -36,7 +36,7 @@ if git fetch --no-tags origin $MAIN_BRANCH; then
     # if not on master branch, check it out, update and return to branch
     if [[ $BRANCH != $MAIN_BRANCH ]]; then
         git checkout $MAIN_BRANCH
-        git rebase origin/$MAIN_BRANCH --rebase-merges
+        git rebase origin/HEAD --rebase-merges --autostash
         git checkout -
     fi
     # rebase changes on top of origin/master
