@@ -1,13 +1,16 @@
-
 # git-commands
 
 A collection of useful git commands.
 
 ## Installation
 
-    git clone https://github.com/ricardobeat/git-commands ~/.git-commands
+Clone the repo and add it to your `PATH`:
 
-    echo export PATH="~/.git-commands:$PATH" > ~/.profile
+```shell
+git clone https://github.com/ricardobeat/git-commands ~/.git-commands
+
+echo export PATH="$PATH:$HOME/.git-commands" > ~/.zshrc # use .profile for bash
+```
 
 ### git author-stats
 
@@ -47,7 +50,7 @@ Display authors of files containing `string`, ranked by frequency.
 
 ### git open
 
-Simultaneously open all changed files using `$EDITOR`, according to `git status`. Lets you pick up 
+Simultaneously open all changed files using `$EDITOR`, according to `git status`. Lets you pick up
 work in progress without depending on editor 'projects' state.
 
 ### git rank
@@ -58,7 +61,7 @@ Display ranking of authors by number of commits + extra stats.
 
 ### git remaster
 
-While working in a branch, `fetch` latest `master`, then rebase current branch on top of that. Use 
+While working in a branch, `fetch` latest `master`, then rebase current branch on top of that. Use
 to keep in sync with main development branch.
 
 ### git repush
@@ -72,12 +75,12 @@ Run GC + prune. Optimized for a huge (~100k files) repository, might not work fo
 
 ### git size [commit]
 
-Show the size in bytes introduced (or removed) by a specific commit. Accepts any ref identifier 
+Show the size in bytes introduced (or removed) by a specific commit. Accepts any ref identifier
 that git understands: hashes, `HEAD^`, etc.
 
 ### git snapshot [note]
 
-Create a named stash, including an optional text note. This will *not* be featured in the stash list,
+Create a named stash, including an optional text note. This will _not_ be featured in the stash list,
 only in reflog (and will be GCed at some point). Use as safety checkpoints while furiously changing code.
 
 ### git sort [hashes]
@@ -98,6 +101,7 @@ can be overriden by setting the `N` environment var.
 ### git stash-merge
 
 Commands like `git stash pop` will refuse to apply over a dirty tree, even when an automatic merge is possible.
-The `stash-merge` command will create a new stash object from your state and try to `merge` them together.
-In chase the the merge fails you still have both in stash list.
 
+The `stash-merge` command will create a new stash object from your state and try to `merge` them together.
+
+In case the the merge fails you still have both in stash list.
