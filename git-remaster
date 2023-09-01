@@ -1,15 +1,26 @@
 #!/bin/bash
  
-## git-remaster
-# Pulls latest remote HEAD to your master and rebases current branch on top of it, preserving staged and unstaged changes.
+#------------------------------------------------------------------------------#
+#
+# git-remaster
+#
+#   Rebases the current branch and updates the main branch at the same time,
+#   preserving staged and unstaged changes in both.
+#
+#     git checkout my-branch
+#     git remaster
+#
+#------------------------------------------------------------------------------#
  
 set -e
- 
-if git show-ref --quiet --verify refs/heads/master; then MASTER=master; fi
-if git show-ref --quiet --verify refs/heads/trunk; then MASTER=trunk; fi
-if [ -z $MASTER ]; then echo "No master/trunk branch found."; exit 1; fi
- 
+
+MAIN_BRANCH=$(git symbolic-ref refs/remotes/origin/HEAD --short | sed 's,origin/,,')
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+if [ -z $MAIN_BRANCH ]; then
+    echo "No master/trunk branch found."
+    exit 1
+fi
  
 # save current state to a detached commit object and reset
 RSTASH=$(git stash create --include-untracked)
@@ -21,15 +32,15 @@ if [[ $RSTASH ]]; then
 fi
     
 # fetch updates
-if git fetch --prune --no-tags origin $MASTER; then   
+if git fetch --prune --no-tags origin $MAIN_BRANCH; then   
     # if not on master branch, check it out, update and return to branch
-    if [[ $BRANCH != $MASTER ]]; then
-        git checkout $MASTER
-        git rebase origin/$MASTER --preserve-merges
+    if [[ $BRANCH != $MAIN_BRANCH ]]; then
+        git checkout $MAIN_BRANCH
+        git rebase origin/$MAIN_BRANCH --rebase-merges
         git checkout -
     fi
     # rebase changes on top of origin/master
-    git rebase origin/$MASTER --preserve-merges
+    git rebase origin/$MAIN_BRANCH --rebase-merges
 fi
  
 # bring back stash if available, hide errors when empty
