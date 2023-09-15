@@ -7,7 +7,9 @@ set -e
  
 if git show-ref --quiet --verify refs/heads/master; then MASTER=master; fi
 if git show-ref --quiet --verify refs/heads/trunk; then MASTER=trunk; fi
-if [ -z $MASTER ]; then echo "No master/trunk branch found."; exit 1; fi
+if git show-ref --quiet --verify refs/heads/main; then MASTER=main; fi
+
+if [ -z $MASTER ]; then echo "No master/trunk/main branch found."; exit 1; fi
  
 BRANCH=$(git rev-parse --abbrev-ref HEAD)
  
