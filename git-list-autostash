@@ -1,0 +1,6 @@
+#!/bin/bash
+
+# finds detached autostash commits
+git fsck --no-reflog \
+  | awk '/dangling commit/ {print $3}' \
+  | xargs -n1 git log --pretty='%h %s' -p -1

@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+TARGET=${1:-diff}
+
+preview () {
+    fzf --preview 'bat --color=always --style=header,grid,changes --line-range :500 {2}'
+}
+
+
+usage () {
+    echo "
+Usage:
+  git review
+  git review [hash]
+"
+}
+
+if [[ $TARGET = "diff" ]]; then
+    git status -s | preview
+elif [[ -n $TARGET ]]; then
+    if git show-ref -q $TARGET; then
+        git diff --name-only $TARGET | preview
+    else
+        usage
+        exit 1
+    fi
+fi
