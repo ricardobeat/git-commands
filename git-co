@@ -3,7 +3,13 @@
 STASH=$(git stash create)
 
 branch_list=$(git for-each-ref --sort=-committerdate --format='%(refname:short)' refs/heads/ | grep -v -e "^$")
-git checkout $(echo "$branch_list" | fzf --preview 'git show --color {}')
+
+SELECTED_BRANCH=$(echo "$branch_list" | fzf \
+ --header='Select branch to checkout (Ctrl-C to cancel)' \
+ --preview='git log --oneline --graph --color=always -n 20 {}' \
+)
+
+git checkout $SELECTED_BRANCH
 
 if [[ -n $STASH ]]; then
     git stash apply $STASH
